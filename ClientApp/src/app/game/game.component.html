@@ -1,0 +1,60 @@
+﻿<div class="container">
+
+  <div class='row' style="margin:20px;">
+    <div class='col-sm-12'>
+      <div id="rejected" style="display: none;">
+        <div class="alert alert-danger" role="alert">
+          Unfortunately, the number of players has reached its maximum. Please, try to join the game later.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row' style="margin:20px;">
+    <div class='col-sm-12'>
+      <div id="not-joined">
+        <form class="form-inline">
+          Type your username to join the competition
+          <input type="text" class="form-control mb-2 mr-sm-2" [(ngModel)]="username" name="username" placeholder="Username">
+
+          <button (click)="join()" class="btn btn-primary mb-2">Join</button>
+        </form>
+      </div>
+      <div id="joined">
+        <div class="alert alert-success" role="alert">
+          You are in the game, <strong>{{username}}</strong>! Answer the challenge correct and the first one to get one point.
+        </div>
+        <div class="alert alert-warning" role="alert">
+          <h4>Your current score is <strong>{{score}} points.</strong></h4>
+          <h6>There are {{playersOnline}} players online.</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='row' style="margin:20px;">
+
+    <div class='col-sm-3'>
+      <div class="card" id="readyToAnswer">
+        <div class="card-body">
+          <h3 class="card-title" *ngIf="!roundEnded; else current_round_ended">Current round</h3>
+          <ng-template #current_round_ended><h3 class="card-title">This round is over</h3></ng-template>
+          <h6 class="card-subtitle mb-2 text-muted" *ngIf="!roundEnded; else countdown_for_the_next_round">Is this correct?</h6>
+          <ng-template #countdown_for_the_next_round><h6 class="card-subtitle mb-2 text-muted">The new round starts in 5 seconds.</h6></ng-template>
+          <div class="card-text lead" style="display:inline-block;">
+            {{question}}
+            <div id="answerButtons" style="display:inline-block;">
+              <button (click)="answerYes()" class="btn btn-success mb-2"><span class="glyphicon glyphicon-ok" aria-hidden="true">TRUE</span></button>
+              <button (click)="answerNo()" class="btn btn-danger mb-2"><span class="glyphicon glyphicon-remove" aria-hidden="true">FALSE</span></button>
+            </div>
+            <div id="result" style="display:inline-block;"><strong class="text-{{answerColor}}">{{answeredResult}}</strong></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='col-sm-8'>
+      <!-- notification -->
+      <div class="alert alert-info" role="alert" *ngFor="let notification of notifications">{{notification}}</div>
+    </div>
+  </div>
+</div>
